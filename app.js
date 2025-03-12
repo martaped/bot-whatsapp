@@ -1,4 +1,20 @@
-const qrcode = require('qrcode-terminal');
+//const qrcode = require('qrcode-terminal');
+const qrcode = require('qrcode');
+
+sock.ev.on('connection.update', async (update) => {
+    const { qr } = update;
+    if (qr) {
+        // Genera el QR como imagen
+        const qrImage = await qrcode.toDataURL(qr);
+        
+        // Envía el QR a tu número de WhatsApp (reemplaza con tu número en formato internacional)
+        const miNumero = '5493547641471@s.whatsapp.net';
+        await sock.sendMessage(miNumero, { image: { url: qrImage }, caption: 'Escanea este QR para conectar el bot.' });
+
+        console.log('📤 QR enviado a tu WhatsApp.');
+    }
+});
+
 const { makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 
 const main = async () => {
